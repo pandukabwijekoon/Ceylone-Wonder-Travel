@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Hotels | Ceylon Wonders Sri Lanka</title>
+  <meta name="description" content="Book the perfect hotel for your Sri Lanka trip. Options for both locals and international visitors." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body { background: #050D10; }
+    .booking-hero { min-height: 42vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; text-align: center; padding: 9rem 2rem 4rem; }
+    .booking-hero-bg { position: absolute; inset: 0; background: url('assest/queens hotel.jpeg') center/cover no-repeat; filter: brightness(0.28); transform: scale(1.05); }
+    .booking-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,13,16,0.3) 0%, rgba(5,13,16,0.75) 100%); }
+    .booking-hero-content { position: relative; z-index: 2; }
+    .booking-hero h1 { font-family: 'Cinzel', serif; font-size: clamp(2.4rem, 5vw, 4.2rem); margin-bottom: 0.75rem; }
+    .booking-hero p { color: #8BA8AE; font-size: 1rem; max-width: 500px; margin: 0 auto; }
+
+    /* TYPE TOGGLE */
+    .type-toggle { display: flex; justify-content: center; margin-bottom: 2.5rem; }
+    .toggle-wrap { display: inline-flex; background: rgba(11,61,69,0.3); border: 1px solid rgba(201,168,76,0.2); border-radius: 50px; padding: 5px; }
+    .toggle-btn { padding: 0.65rem 2rem; border-radius: 50px; border: none; background: transparent; color: #8BA8AE; font-family: 'Outfit', sans-serif; font-size: 0.92rem; font-weight: 600; cursor: pointer; transition: all 0.35s ease; }
+    .toggle-btn.active { background: linear-gradient(135deg, #C9A84C, #F39C12); color: #050D10; box-shadow: 0 4px 20px rgba(201,168,76,0.4); }
+
+    /* BOOKING FORM */
+    .booking-section { padding: 5rem 0; background: #050D10; }
+    .booking-wrap { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: start; }
+    .booking-form-card { background: rgba(11,61,69,0.2); border: 1px solid rgba(201,168,76,0.15); border-radius: 24px; padding: 2.5rem; }
+    .booking-form-card h2 { font-family: 'Cinzel', serif; font-size: 1.7rem; margin-bottom: 0.5rem; }
+    .booking-form-card > p { color: #8BA8AE; font-size: 0.9rem; margin-bottom: 2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .section-divider { height: 1px; background: rgba(201,168,76,0.12); margin: 1.75rem 0; }
+    .form-section-label { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: #C9A84C; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+
+    /* Foreigner/Local extra */
+    #foreignerExtra, #localExtra { display: none; }
+    #foreignerExtra.show, #localExtra.show { display: block; }
+
+    /* SUMMARY CARD */
+    .summary-card { background: rgba(11,61,69,0.25); border: 1px solid rgba(201,168,76,0.2); border-radius: 20px; padding: 2rem; position: sticky; top: 100px; }
+    .summary-card h3 { font-family: 'Cinzel', serif; font-size: 1.2rem; margin-bottom: 1.5rem; }
+    .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 0.65rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.88rem; }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-row .label { color: #8BA8AE; }
+    .summary-row .value { color: #E8D5B0; font-weight: 600; }
+    .summary-total { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); border-radius: 12px; padding: 1rem; margin: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; }
+    .summary-total .label { color: #8BA8AE; font-size: 0.85rem; }
+    .summary-total .amount { font-family: 'Cinzel', serif; font-size: 1.5rem; color: #C9A84C; }
+    .hotel-list { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .hotel-option { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border: 1px solid rgba(201,168,76,0.15); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; }
+    .hotel-option:hover, .hotel-option.selected { border-color: #C9A84C; background: rgba(201,168,76,0.08); }
+    .hotel-option input[type=radio] { accent-color: #C9A84C; }
+    .hotel-option-info h5 { font-size: 0.88rem; font-weight: 600; }
+    .hotel-option-info span { font-size: 0.75rem; color: #8BA8AE; }
+    .hotel-stars { color: #C9A84C; font-size: 0.7rem; }
+    .hotel-price { margin-left: auto; font-family: 'Cinzel', serif; font-size: 0.95rem; color: #C9A84C; white-space: nowrap; }
+
+    /* SUCCESS */
+    .booking-success { display: none; text-align: center; padding: 4rem 2rem; }
+    .booking-success.show { display: block; }
+    .success-icon { width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg,#1ABC9C,#0e8a71); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.5rem; box-shadow: 0 0 40px rgba(26,188,156,0.4); }
+    .booking-ref { font-family: 'Cinzel', serif; font-size: 1.3rem; color: #C9A84C; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); border-radius: 12px; padding: 1rem 2rem; display: inline-block; margin: 1rem 0; letter-spacing: 3px; }
+
+    @media(max-width:900px) { .booking-wrap { grid-template-columns: 1fr; } .summary-card { position: static; } }
+    @media(max-width:600px) { .form-row { grid-template-columns: 1fr; } .booking-form-card { padding: 1.5rem; } }
+  </style>
+</head>
+<body>
+
+<div id="loading-screen"><div class="loader-logo">🌿 Ceylon Wonders</div><div class="loader-bar"><div class="loader-bar-fill"></div></div></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- HEADER -->
+<header id="mainHeader" class="scrolled">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🌿</div>
+      <div class="logo-text"><span>Ceylon Wonders</span><span>Sri Lanka Travel</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="nav-dropdown">
+        <a href="explore.html">Destinations <i class="fas fa-chevron-down" style="font-size:0.7rem"></i></a>
+        <ul class="dropdown-menu">
+          <li><a href="kandy.html"><span class="place-emoji">🏛️</span> Kandy</a></li>
+          <li><a href="colombo.html"><span class="place-emoji">🌆</span> Colombo</a></li>
+          <li><a href="galle.html"><span class="place-emoji">🏰</span> Galle</a></li>
+          <li><a href="nuwara-eliya.html"><span class="place-emoji">🍃</span> Nuwara Eliya</a></li>
+          <li><a href="explore.html"><span class="place-emoji">🗺️</span> All Places</a></li>
+        </ul>
+      </li>
+      <li><a href="booking.html" class="active">Book Hotels</a></li>
+      <li><a href="index.html#about">About</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="login.html" class="nav-btn-login">Sign In</a>
+      <a href="booking.html" class="nav-btn-book">Book Now ✈️</a>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Home</a><a href="explore.html">🗺️ Destinations</a>
+  <a href="booking.html">🏨 Book Hotels</a>
+  <div class="mobile-menu-actions">
+    <a href="login.html" class="btn btn-outline" style="flex:1;justify-content:center">Sign In</a>
+    <a href="signup.html" class="btn btn-primary" style="flex:1;justify-content:center">Sign Up</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="booking-hero">
+  <div class="booking-hero-bg"></div>
+  <div class="booking-hero-overlay"></div>
+  <div class="booking-hero-content">
+    <div class="badge">🏨 Hotel Booking</div>
+    <h1 class="section-title" style="-webkit-text-fill-color:white;color:white;">Find Your Perfect Stay</h1>
+    <p>Luxury hotels, boutique guesthouses, and everything in between — book your ideal accommodation in Sri Lanka.</p>
+  </div>
+</div>
+
+<!-- BOOKING SECTION -->
+<section class="booking-section">
+  <div class="container">
+    <!-- TYPE TOGGLE -->
+    <div class="type-toggle">
+      <div class="toggle-wrap">
+        <button class="toggle-btn active" id="btnLocal" onclick="switchType('local')">🇱🇰 Local Resident</button>
+        <button class="toggle-btn" id="btnForeign" onclick="switchType('foreign')">✈️ International Visitor</button>
+      </div>
+    </div>
+
+    <div class="booking-wrap">
+      <!-- FORM -->
+      <div class="booking-form-card reveal">
+        <h2>Book Your Hotel</h2>
+        <p>Fill in your details to secure your reservation</p>
+
+        <div id="bookingForm">
+          <!-- Personal Info -->
+          <div class="form-section-label"><i class="fas fa-user"></i> Personal Information</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name *</label>
+              <input type="text" class="form-control" id="firstName" placeholder="John" />
+              <span class="form-error">Please enter your first name</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name *</label>
+              <input type="text" class="form-control" id="lastName" placeholder="Doe" />
+              <span class="form-error">Please enter your last name</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Email Address *</label>
+              <input type="email" class="form-control" id="email" placeholder="john@example.com" />
+              <span class="form-error">Please enter a valid email</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number *</label>
+              <input type="tel" class="form-control" id="phone" placeholder="+94 71 234 5678" />
+              <span class="form-error">Please enter a valid phone number</span>
+            </div>
+          </div>
+
+          <!-- Local Fields -->
+          <div id="localExtra" class="show">
+            <div class="section-divider"></div>
+            <div class="form-section-label"><i class="fas fa-id-card"></i> Local Resident Details</div>
+            <div class="form-group">
+              <label class="form-label">NIC Number *</label>
+              <input type="text" class="form-control" id="nic" placeholder="199012345678 or 901234567V" />
+              <span class="form-error">Please enter a valid NIC number</span>
+            </div>
+          </div>
+
+          <!-- Foreigner Fields -->
+          <div id="foreignerExtra">
+            <div class="section-divider"></div>
+            <div class="form-section-label"><i class="fas fa-passport"></i> International Visitor Details</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Nationality *</label>
+                <select class="form-control" id="nationality">
+                  <option value="">Select Country</option>
+                  <option>United Kingdom</option><option>United States</option><option>Germany</option>
+                  <option>France</option><option>Japan</option><option>Australia</option>
+                  <option>China</option><option>India</option><option>Canada</option>
+                  <option>Netherlands</option><option>Italy</option><option>South Korea</option>
+                  <option>Other</option>
+                </select>
+                <span class="form-error">Please select your nationality</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Passport Number *</label>
+                <input type="text" class="form-control" id="passport" placeholder="AB1234567" />
+                <span class="form-error">Please enter a valid passport number</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Visa Type</label>
+              <select class="form-control" id="visaType">
+                <option value="">Select visa type</option>
+                <option>Tourist Visa (ETA)</option>
+                <option>Business Visa</option>
+                <option>Transit Visa</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="section-divider"></div>
+          <div class="form-section-label"><i class="fas fa-calendar-alt"></i> Booking Details</div>
+          <div class="form-group">
+            <label class="form-label">Destination *</label>
+            <select class="form-control" id="destination" onchange="updateSummary()">
+              <option value="">Select Destination</option>
+              <option value="Kandy">Kandy</option>
+              <option value="Colombo">Colombo</option>
+              <option value="Galle">Galle</option>
+              <option value="Nuwara Eliya">Nuwara Eliya</option>
+              <option value="Sigiriya">Sigiriya</option>
+              <option value="Ella">Ella</option>
+              <option value="Mirissa">Mirissa</option>
+              <option value="Trincomalee">Trincomalee</option>
+            </select>
+            <span class="form-error">Please select a destination</span>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Check-in Date *</label>
+              <input type="date" class="form-control" id="checkin" onchange="updateSummary()" />
+              <span class="form-error">Please select check-in date</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Check-out Date *</label>
+              <input type="date" class="form-control" id="checkout" onchange="updateSummary()" />
+              <span class="form-error">Check-out must be after check-in</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Adults *</label>
+              <select class="form-control" id="adults" onchange="updateSummary()">
+                <option>1</option><option>2</option><option>3</option><option>4</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Room Type *</label>
+              <select class="form-control" id="roomType" onchange="updateSummary()">
+                <option value="">Select Room</option>
+                <option value="Standard" data-price="80">Standard Room</option>
+                <option value="Deluxe" data-price="130">Deluxe Room</option>
+                <option value="Suite" data-price="220">Suite</option>
+                <option value="Villa" data-price="380">Private Villa</option>
+              </select>
+              <span class="form-error">Please select a room type</span>
+            </div>
+          </div>
+
+          <!-- Hotels -->
+          <div class="form-section-label" style="margin-top:1rem"><i class="fas fa-hotel"></i> Select Hotel</div>
+          <div class="hotel-list">
+            <label class="hotel-option selected">
+              <input type="radio" name="hotel" value="Ceylon Grand" checked />
+              <div class="hotel-option-info">
+                <h5>Ceylon Grand Hotel</h5>
+                <div class="hotel-stars">★★★★★</div>
+                <span>5-Star Luxury • Pool • Spa • Restaurant</span>
+              </div>
+              <div class="hotel-price">$220/night</div>
+            </label>
+            <label class="hotel-option">
+              <input type="radio" name="hotel" value="Lakeside Boutique" />
+              <div class="hotel-option-info">
+                <h5>Lakeside Boutique</h5>
+                <div class="hotel-stars">★★★★</div>
+                <span>4-Star • Lake View • Breakfast Included</span>
+              </div>
+              <div class="hotel-price">$130/night</div>
+            </label>
+            <label class="hotel-option">
+              <input type="radio" name="hotel" value="Heritage Escape" />
+              <div class="hotel-option-info">
+                <h5>Heritage Escape</h5>
+                <div class="hotel-stars">★★★★</div>
+                <span>4-Star • Colonial Style • Garden</span>
+              </div>
+              <div class="hotel-price">$110/night</div>
+            </label>
+            <label class="hotel-option">
+              <input type="radio" name="hotel" value="Green Valley Inn" />
+              <div class="hotel-option-info">
+                <h5>Green Valley Inn</h5>
+                <div class="hotel-stars">★★★</div>
+                <span>3-Star • Budget Friendly • City Center</span>
+              </div>
+              <div class="hotel-price">$65/night</div>
+            </label>
+          </div>
+
+          <div class="section-divider"></div>
+          <div class="form-group">
+            <label class="form-label">Special Requests</label>
+            <textarea class="form-control" id="requests" rows="3" placeholder="Early check-in, dietary requirements, accessibility needs..."></textarea>
+          </div>
+
+          <div class="form-group" style="margin-top:1rem">
+            <label style="display:flex;align-items:flex-start;gap:0.75rem;cursor:pointer">
+              <input type="checkbox" id="agreeTerms" style="accent-color:#C9A84C;margin-top:3px" />
+              <span style="font-size:0.85rem;color:#8BA8AE">I agree to the <a href="#" style="color:#C9A84C">Terms & Conditions</a> and <a href="#" style="color:#C9A84C">Privacy Policy</a></span>
+            </label>
+            <span class="form-error" id="termsError" style="display:none">You must agree to the terms</span>
+          </div>
+
+          <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:1rem;font-size:1rem;padding:1rem" onclick="submitBooking()">
+            <i class="fas fa-check-circle"></i> Confirm Booking
+          </button>
+        </div>
+
+        <!-- SUCCESS -->
+        <div class="booking-success" id="bookingSuccess">
+          <div class="success-icon">✅</div>
+          <h2 style="font-family:'Cinzel',serif;margin-bottom:0.5rem">Booking Confirmed!</h2>
+          <p style="color:#8BA8AE;margin-bottom:1rem">Your reservation has been successfully placed. Check your email for details.</p>
+          <div class="booking-ref" id="bookingRef">CW-######</div>
+          <div style="margin-top:2rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+            <a href="index.html" class="btn btn-primary"><i class="fas fa-home"></i> Back to Home</a>
+            <a href="booking.html" class="btn btn-outline"><i class="fas fa-plus"></i> New Booking</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUMMARY SIDEBAR -->
+      <div class="summary-card reveal-right">
+        <h3>📋 Booking Summary</h3>
+        <div class="summary-row"><span class="label">Destination</span><span class="value" id="sumDest">—</span></div>
+        <div class="summary-row"><span class="label">Check-in</span><span class="value" id="sumIn">—</span></div>
+        <div class="summary-row"><span class="label">Check-out</span><span class="value" id="sumOut">—</span></div>
+        <div class="summary-row"><span class="label">Nights</span><span class="value" id="sumNights">—</span></div>
+        <div class="summary-row"><span class="label">Guests</span><span class="value" id="sumGuests">—</span></div>
+        <div class="summary-row"><span class="label">Room Type</span><span class="value" id="sumRoom">—</span></div>
+        <div class="summary-total">
+          <span class="label">Estimated Total</span>
+          <span class="amount" id="sumTotal">$0</span>
+        </div>
+        <p style="font-size:0.78rem;color:#8BA8AE;text-align:center">*Final price confirmed at checkout. Taxes may apply.</p>
+
+        <div style="margin-top:1.5rem;padding:1rem;background:rgba(26,188,156,0.08);border:1px solid rgba(26,188,156,0.2);border-radius:12px">
+          <div style="font-size:0.82rem;color:#1ABC9C;font-weight:600;margin-bottom:0.5rem">✓ Free Cancellation</div>
+          <div style="font-size:0.78rem;color:#8BA8AE">Cancel up to 48 hours before check-in for a full refund.</div>
+        </div>
+        <div style="margin-top:1rem;padding:1rem;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:12px">
+          <div style="font-size:0.82rem;color:#C9A84C;font-weight:600;margin-bottom:0.5rem">🏆 Best Price Guarantee</div>
+          <div style="font-size:0.78rem;color:#8BA8AE">Found it cheaper? We'll match the price.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="margin-bottom:1rem">
+          <div class="logo-icon">🌿</div>
+          <div class="logo-text"><span>Ceylon Wonders</span><span>Sri Lanka Travel</span></div>
+        </div>
+        <p>Your premier gateway to discovering the magical island of Sri Lanka.</p>
+      </div>
+      <div class="footer-col"><h5>Quick Links</h5><ul><li><a href="index.html">Home</a></li><li><a href="explore.html">Destinations</a></li><li><a href="booking.html">Book Hotels</a></li></ul></div>
+      <div class="footer-col"><h5>Destinations</h5><ul><li><a href="kandy.html">Kandy</a></li><li><a href="colombo.html">Colombo</a></li><li><a href="galle.html">Galle</a></li><li><a href="nuwara-eliya.html">Nuwara Eliya</a></li></ul></div>
+      <div class="footer-col"><h5>Contact</h5><ul><li><a href="tel:+94112345678">+94 11 234 5678</a></li><li><a href="mailto:info@ceylonwonders.lk">info@ceylonwonders.lk</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2024 Ceylon Wonders. All rights reserved.</span><span>Made with ❤️ for Sri Lanka</span></div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/booking.js"></script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account | Ceylon Wonders</title>
+  <meta name="description" content="Join Ceylon Wonders today to explore the best of Sri Lanka and manage your travel bookings." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+    .auth-page { flex: 1; display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
+
+    /* LEFT PANEL (Reused from login) */
+    .auth-visual { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 3rem; }
+    .auth-visual-bg { position: absolute; inset: 0; }
+    .auth-visual-bg .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.5s ease; }
+    .auth-visual-bg .slide.active { opacity: 1; }
+    .auth-visual-bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.35); }
+    .auth-visual-overlay { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(5,13,16,0.4) 0%, rgba(11,61,69,0.6) 50%, rgba(5,13,16,0.9) 100%); }
+    .auth-visual-content { position: relative; z-index: 2; }
+    .auth-logo { position: absolute; top: 2rem; left: 2rem; z-index: 10; display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .auth-logo .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg,#C9A84C,#F39C12); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .auth-logo .logo-text span:first-child { display: block; font-family: 'Cinzel',serif; font-size: 1.1rem; color: #fff; }
+    .auth-logo .logo-text span:last-child { display: block; font-size: 0.6rem; letter-spacing: 2px; color: #C9A84C; text-transform: uppercase; }
+    .auth-visual-quote { font-family: 'Playfair Display',serif; font-size: 1.8rem; font-style: italic; color: #fff; line-height: 1.4; margin-bottom: 0.5rem; }
+    .auth-visual-quote span { color: #C9A84C; }
+    .auth-visual-sub { color: #8BA8AE; font-size: 0.9rem; }
+    .visual-dots { display: flex; gap: 0.4rem; margin-top: 1.5rem; }
+    .vdot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.3); border: none; cursor: pointer; transition: all 0.3s ease; }
+    .vdot.active { background: #C9A84C; width: 20px; border-radius: 3px; }
+
+    /* RIGHT PANEL */
+    .auth-form-panel { background: #050D10; display: flex; align-items: center; justify-content: center; padding: 3rem 2rem; }
+    .auth-form-wrap { width: 100%; max-width: 480px; }
+    .auth-form-wrap h1 { font-family: 'Cinzel',serif; font-size: 2rem; margin-bottom: 0.4rem; }
+    .auth-form-wrap h1 span { background: linear-gradient(135deg,#C9A84C,#F39C12); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .auth-form-wrap .subtitle { color: #8BA8AE; font-size: 0.9rem; margin-bottom: 2rem; }
+    .auth-switch { text-align: center; margin-top: 1.5rem; font-size: 0.88rem; color: #8BA8AE; }
+    .auth-switch a { color: #C9A84C; text-decoration: none; font-weight: 600; }
+    .auth-switch a:hover { text-decoration: underline; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    
+    /* PASSWORD TOGGLE */
+    .pass-wrap { position: relative; }
+    .pass-toggle { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: #8BA8AE; cursor: pointer; font-size: 0.9rem; transition: color 0.3s; }
+    .pass-toggle:hover { color: #C9A84C; }
+
+    /* STRENGTH */
+    .strength-bar { display: flex; gap: 4px; margin-top: 0.4rem; height: 3px; }
+    .strength-seg { flex: 1; border-radius: 2px; background: rgba(255,255,255,0.1); transition: background 0.3s; }
+    .strength-label { font-size: 0.72rem; color: #8BA8AE; margin-top: 0.25rem; font-weight: 500; }
+
+    @media(max-width:768px) {
+      .auth-page { grid-template-columns: 1fr; }
+      .auth-visual { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="loading-screen"><div class="loader-logo">🌿 Ceylon Wonders</div><div class="loader-bar"><div class="loader-bar-fill"></div></div></div>
+
+<div class="auth-page">
+  <!-- LEFT VISUAL -->
+  <div class="auth-visual">
+    <a href="index.html" class="auth-logo">
+      <div class="logo-icon">🌿</div>
+      <div class="logo-text"><span>Ceylon Wonders</span><span>Sri Lanka Travel</span></div>
+    </a>
+    <div class="auth-visual-bg">
+      <div class="slide active"><img src="assest/bodigala.jpeg" alt="Galle" /></div>
+      <div class="slide"><img src="assest/hulangala.jpeg" alt="Nuwara Eliya" /></div>
+      <div class="slide"><img src="assest/ranwan.jpeg" alt="Scenic" /></div>
+    </div>
+    <div class="auth-visual-overlay"></div>
+    <div class="auth-visual-content">
+      <div class="auth-visual-quote">"Adventure <span>awaits</span> in every corner of this emerald isle."</div>
+      <div class="auth-visual-sub">Join thousands of travelers who have discovered the magic of Sri Lanka.</div>
+      <div class="visual-dots">
+        <button class="vdot active" onclick="switchVisual(0,this)"></button>
+        <button class="vdot" onclick="switchVisual(1,this)"></button>
+        <button class="vdot" onclick="switchVisual(2,this)"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT FORM -->
+  <div class="auth-form-panel">
+    <div class="auth-form-wrap">
+      <p style="font-size:0.8rem;letter-spacing:2px;color:#C9A84C;text-transform:uppercase;margin-bottom:0.5rem">Start Your Journey</p>
+      <h1>Create <span>Account</span></h1>
+      <p class="subtitle">Join us to explore the Pearl of the Indian Ocean</p>
+
+      <form id="signupForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" class="form-control" id="signupName" placeholder="Dilshan Tennakoon" />
+            <span class="form-error">Please enter your full name</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Username *</label>
+            <input type="text" class="form-control" id="signupUser" placeholder="dilshan_sl" />
+            <span class="form-error">Username is required</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Address *</label>
+          <input type="email" class="form-control" id="signupEmail" placeholder="your@email.com" />
+          <span class="form-error">Enter a valid email address</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password *</label>
+          <div class="pass-wrap">
+            <input type="password" class="form-control" id="signupPass" placeholder="••••••••" onkeyup="checkStrength(this.value)" />
+            <button type="button" class="pass-toggle" onclick="togglePass('signupPass',this)"><i class="fas fa-eye"></i></button>
+          </div>
+          <div class="strength-bar" id="strengthBar">
+            <div class="strength-seg" id="seg1"></div>
+            <div class="strength-seg" id="seg2"></div>
+            <div class="strength-seg" id="seg3"></div>
+            <div class="strength-seg" id="seg4"></div>
+          </div>
+          <div class="strength-label" id="strengthLabel">Password strength</div>
+          <span class="form-error">Password must be at least 8 characters</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Confirm Password *</label>
+          <div class="pass-wrap">
+            <input type="password" class="form-control" id="signupConfirm" placeholder="••••••••" />
+            <button type="button" class="pass-toggle" onclick="togglePass('signupConfirm',this)"><i class="fas fa-eye"></i></button>
+          </div>
+          <span class="form-error">Passwords do not match</span>
+        </div>
+
+        <div class="form-group">
+          <label style="display:flex;align-items:flex-start;gap:0.75rem;cursor:pointer">
+            <input type="checkbox" id="signupTerms" style="accent-color:#C9A84C;margin-top:3px" />
+            <span style="font-size:0.85rem;color:#8BA8AE">I agree to the <a href="#" style="color:#C9A84C">Terms of Service</a> and <a href="#" style="color:#C9A84C">Privacy Policy</a></span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:0.98rem;padding:0.95rem">
+          <i class="fas fa-user-plus"></i> Create Account
+        </button>
+      </form>
+
+      <div class="auth-switch">
+        Already have an account? <a href="login.html">Sign In</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  // Visual slider
+  const vSlides = document.querySelectorAll('.auth-visual-bg .slide');
+  function switchVisual(idx, btn) {
+    vSlides.forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.vdot').forEach(d => d.classList.remove('active'));
+    vSlides[idx]?.classList.add('active');
+    btn?.classList.add('active');
+  }
+  let vIdx = 0;
+  setInterval(() => { vIdx = (vIdx + 1) % vSlides.length; const dots = document.querySelectorAll('.vdot'); switchVisual(vIdx, dots[vIdx]); }, 4500);
+
+  // Strength checker
+  function checkStrength(pass) {
+    const label = document.getElementById('strengthLabel');
+    const segs = [document.getElementById('seg1'), document.getElementById('seg2'), document.getElementById('seg3'), document.getElementById('seg4')];
+    let score = 0;
+    if (pass.length >= 8) score++;
+    if (/[A-Z]/.test(pass)) score++;
+    if (/[0-9]/.test(pass)) score++;
+    if (/[^A-Za-z0-9]/.test(pass)) score++;
+
+    segs.forEach(s => s.style.background = 'rgba(255,255,255,0.1)');
+    const colors = ['#FF6B6B', '#F39C12', '#F1C40F', '#1ABC9C'];
+    const texts = ['Weak', 'Fair', 'Good', 'Strong'];
+
+    for(let i=0; i<score; i++) segs[i].style.background = colors[score-1];
+    if (pass) label.textContent = 'Strength: ' + texts[score-1];
+    else label.textContent = 'Password strength';
+  }
+</script>
+</body>
+</html>

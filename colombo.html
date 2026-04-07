@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Colombo | The Vibrant Capital of Sri Lanka</title>
+  <meta name="description" content="Explore Colombo, Sri Lanka's dynamic capital where colonial history meets modern luxury, rooftop bars, and stunning coastal views." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body { background: #050D10; }
+    
+    .dest-hero { height: 65vh; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 4rem 0; }
+    .dest-hero-bg { position: absolute; inset: 0; background: url('assest/kandy clock tower.jpeg') center/cover no-repeat; filter: brightness(0.4); transform: scale(1.05); transition: transform 0.8s ease; }
+    .dest-hero:hover .dest-hero-bg { transform: scale(1); }
+    .dest-hero-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(5,13,16,1) 0%, rgba(5,13,16,0.2) 100%); }
+    .dest-hero-content { position: relative; z-index: 2; width: 100%; }
+
+    .content-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 4rem; padding: 5rem 0; }
+    .info-section h2 { font-family: 'Cinzel', serif; font-size: 2.2rem; margin-bottom: 2rem; color: #C9A84C; border-left: 4px solid #C9A84C; padding-left: 1.5rem; }
+    .info-section p { font-size: 1.05rem; color: #8BA8AE; line-height: 1.9; margin-bottom: 2rem; }
+    .feature-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .feature-item { display: flex; align-items: center; gap: 0.75rem; font-size: 0.95rem; color: #E8D5B0; padding: 1rem; background: rgba(11, 61, 69, 0.2); border-radius: 12px; border: 1px solid rgba(201, 168, 76, 0.1); }
+    .feature-item i { color: #C9A84C; font-size: 1.1rem; }
+
+    .gallery-preview { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; height: 100%; }
+    .img-box { border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+    .img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .img-box:hover img { transform: scale(1.1); }
+
+    .sticky-card { position: sticky; top: 100px; background: rgba(11, 61, 69, 0.25); border: 1px solid rgba(201, 168, 76, 0.2); border-radius: 24px; padding: 2.5rem; backdrop-filter: blur(10px); }
+    .sticky-card h3 { font-family: 'Cinzel', serif; font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
+
+    @media(max-width: 900px) { .content-grid { grid-template-columns: 1fr; padding: 2rem 0; gap: 2rem; } .sticky-card { position: static; margin-top: 2rem; } }
+  </style>
+</head>
+<body>
+
+<div id="loading-screen"><div class="loader-logo">🌿 Ceylon Wonders</div><div class="loader-bar"><div class="loader-bar-fill"></div></div></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- HEADER -->
+<header id="mainHeader" class="scrolled">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🌿</div>
+      <div class="logo-text"><span>Ceylon Wonders</span><span>Sri Lanka Travel</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Destinations</a></li>
+      <li><a href="booking.html" class="active">Book Hotels</a></li>
+      <li><a href="index.html#about">About</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="login.html" class="nav-btn-login">Sign In</a>
+      <a href="booking.html" class="nav-btn-book">Book Now ✈️</a>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">🏠 Home</a><a href="explore.html">🗺️ Destinations</a>
+  <a href="booking.html">🏨 Book Hotels</a>
+</div>
+
+<!-- HERO -->
+<div class="dest-hero">
+  <div class="dest-hero-bg"></div>
+  <div class="dest-hero-overlay"></div>
+  <div class="container dest-hero-content">
+    <div class="badge">✦ City of Modernity</div>
+    <h1 class="section-title" style="color:white;-webkit-text-fill-color:white;text-align:left;font-size:clamp(2.5rem,6vw,4.5rem);">Discover <span style="background:linear-gradient(135deg,#C9A84C,#F39C12);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Colombo</span></h1>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="content-grid">
+      <!-- INFO -->
+      <div class="info-section">
+        <div class="reveal">
+          <h2>Metropolis by the Ocean</h2>
+          <p>Colombo is the beat that drives Sri Lanka forward. A city of contrasts, where colonial-era mansions stand alongside sleek glass towers, and ancient temples find peace amidst the bustling urban landscape. From the legendary Galle Face Green to the luxury lifestyle of Colombo 07, the capital is a feast for the senses.</p>
+          <p>Witness the architectural evolution at the Gangaramaya Temple, shop for authentic local crafts at Laksala, or enjoy a sunset cocktail at a world-class rooftop bar. Colombo is an essential stop for every modern explorer.</p>
+        </div>
+
+        <div class="gallery-preview reveal delay-200" style="margin-bottom: 3rem;">
+          <div class="img-box" style="grid-row: span 2;"><img src="assest/kandy clock tower.jpeg" alt="Colombo City" /></div>
+          <div class="img-box"><img src="assest/polgolla (4).jpeg" alt="Urban Life" /></div>
+          <div class="img-box"><img src="assest/ranwan.jpeg" alt="Galle Face" /></div>
+        </div>
+
+        <div class="reveal">
+          <h2>Must-Visit Highlights</h2>
+          <ul class="feature-list">
+            <li class="feature-item"><i class="fas fa-building"></i> Lotus Tower</li>
+            <li class="feature-item"><i class="fas fa-landmark"></i> Independence Square</li>
+            <li class="feature-item"><i class="fas fa-sun"></i> Galle Face Green</li>
+            <li class="feature-item"><i class="fas fa-om"></i> Seema Malakaya</li>
+            <li class="feature-item"><i class="fas fa-shopping-bag"></i> Dutch Hospital</li>
+            <li class="feature-item"><i class="fas fa-utensils"></i> Iconic Rooftops</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="sidebar-section">
+        <div class="sticky-card reveal-right">
+          <h3>Stay in Colombo?</h3>
+          <p style="color:#8BA8AE;text-align:center;font-size:0.9rem;margin-bottom:1.5rem;">Explore the capital's finest hotels, from historic landmarks to modern skyscrapers.</p>
+          <div style="display:flex;flex-direction:column;gap:1rem;">
+            <a href="booking.html" class="btn btn-primary" style="justify-content:center;">Book a Hotel in Colombo</a>
+            <a href="explore.html" class="btn btn-outline" style="justify-content:center;">Back to All Destinations</a>
+          </div>
+          <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.08);">
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.85rem;color:#8BA8AE;"><span class="label">Climate:</span><span class="value">Tropical (26°C - 32°C)</span></div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.85rem;color:#8BA8AE;"><span class="label">Best Time:</span><span class="value">December to March</span></div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.85rem;color:#8BA8AE;"><span class="label">Lifestyle:</span><span class="value">Urban & Coastal</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo"><div class="logo-icon">🌿</div><div class="logo-text"><span>Ceylon Wonders</span><span>Sri Lanka Travel</span></div></div></div>
+      <div class="footer-col"><h5>Quick Links</h5><ul><li><a href="index.html">Home</a></li><li><a href="explore.html">Destinations</a></li><li><a href="booking.html">Book Hotels</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2024 Ceylon Wonders.</span></div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
