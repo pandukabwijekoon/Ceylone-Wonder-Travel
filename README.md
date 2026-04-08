@@ -17,33 +17,3 @@
 * **Security:** Bcryptjs for password hashing & JWT for session management.
 * **Frontend:** React/HTML/CSS (Tailwind CSS)
 
-## ⚙️ Installation & Setup
-
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/YOUR_USERNAME/ceylon-wonders.git](https://github.com/YOUR_USERNAME/ceylon-wonders.git)
-    ```
-
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-
-3.  **Setup Environment Variables:**
-    Create a `.env` file in the root directory and add:
-    ```env
-    PORT=5000
-    MONGO_URI=your_mongodb_connection_string
-    JWT_SECRET=your_secret_key
-    ```
-
-4.  **Run the server:**
-    ```bash
-    node server.js
-    ```
-
-## 📸 Screenshots
-*(Add your map and website screenshots here)*
-
-## 👨‍💻 Author
-**Panduka** - [Your GitHub Profile Link]
